@@ -1,9 +1,13 @@
 import { Header } from "./Header.tsx";
 import { Outlet } from "react-router";
 
-export function MainLayout() {
+/*interface MainLayoutProps {
+    darkMode: string,
+}*/
+
+export function MainLayout(/*props: MainLayoutProps*/) {
     return (
-        <div>
+        <div className={/*props.darkMode*/""}>
             <Header />
             <div style={{padding: "0 2em"}}>
                 <Outlet/>

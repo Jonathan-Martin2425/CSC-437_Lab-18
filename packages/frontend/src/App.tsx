@@ -6,16 +6,26 @@ import { Routes, Route } from "react-router";
 import { MainLayout } from "./MainLayout.tsx";
 import { fetchDataFromServer } from "./MockAppData.ts";
 import { useState } from "react";
+import { ValidRoutes} from "../../src/shared/ValidRoutes.ts"
 
 function App() {
     const [imageData, _setImageData] = useState(fetchDataFromServer);
+
+    //dark mode example
+    /*const [isDarkMode, setIsDarkMode] = useState(false);
+
+    let darkModeClass = "";
+    if(isDarkMode){
+        darkModeClass = "dark-mode";
+    }*/
+
     return (
         <Routes>
-            <Route path="/" element={<MainLayout/>}>
+            <Route path={ValidRoutes.HOME} element={<MainLayout /*darkMode={darkModeClass}*//>}>
                 <Route index element={<AllImages imageData={imageData}/>}/>
-                <Route path={"images/:imageId"} element={<ImageDetails imageData={imageData}/>}/>
-                <Route path="upload" element={<UploadPage />}/>
-                <Route path="login" element={<LoginPage />}/>
+                <Route path={ValidRoutes.IMAGES + "/:imageId"} element={<ImageDetails imageData={imageData}/>}/>
+                <Route path={ValidRoutes.UPLOAD} element={<UploadPage />}/>
+                <Route path={ValidRoutes.LOGIN} element={<LoginPage />}/>
             </Route>
         </Routes>
     );
