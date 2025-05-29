@@ -1,0 +1,64 @@
+import { useState } from "react";
+import type { IApiImageData } from "../../../backend/src/common/ApiImageData";
+
+interface INameEditorProps {
+    initialValue: string,
+    imageId: string,
+    images: IApiImageData[],
+    setImageData: (data: IApiImageData[]) => void,
+}
+
+export function ImageNameEditor(props: INameEditorProps) {
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [input, setInput] = useState(props.initialValue);
+    const [isFetchingData, _setIsFetchingData] = useState(false);
+    const [fetchHasErrored, _setFetchHasErrored] = useState(false);
+
+    async function handleSubmitPressed() {
+        // TODO
+        const response = fetch("/api/images"); 
+        let hasErrored: boolean = false;
+        _setIsFetchingData(true);
+        response.then((res) => {
+            if(res.status >= 400){
+                console.log("has errored")
+                hasErrored = true;
+                return null
+            }
+
+            return res.json();
+        }).then((json) => {
+            if(json){
+                let imagesCopy = props.images.slice();
+                imagesCopy[Number(props.imageId)].name = input;
+                props.setImageData(imagesCopy)
+            }else{
+                hasErrored = true;
+            }
+            _setFetchHasErrored(hasErrored);
+            _setIsFetchingData(false); 
+            setIsEditingName(false);
+        })
+
+    }
+
+    if (isEditingName) {
+        return (
+            <div style={{ margin: "1em 0" }}>
+                <label>
+                    New Name <input value={input} onChange={e => setInput(e.target.value)}/>
+                </label>
+                <button disabled={input.length === 0 || isFetchingData} onClick={handleSubmitPressed}>Submit</button>
+                <button onClick={() => setIsEditingName(false)}>Cancel</button>
+                {isFetchingData ? <p>Working...</p> : null}
+            </div>
+        );
+    } else {
+        return (
+            <div style={{ margin: "1em 0" }}>
+                <button onClick={() => setIsEditingName(true)}>Edit name</button>
+                {fetchHasErrored ? <p>Submit has Failed</p> : null}
+            </div>
+        );
+    }
+}
