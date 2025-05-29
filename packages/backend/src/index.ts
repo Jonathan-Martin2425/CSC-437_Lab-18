@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
-import path from "path";
 import { ValidRoutes } from "../../src/shared/ValidRoutes";
-import { fetchDataFromServer } from "./common/ApiImageData";
+import { ImageProvider } from "./ImageProvider";
+import { connectMongo } from "./connectMongo";
 
 dotenv.config(); // Read the .env file in the current working directory, and load values into process.env.
 const PORT = process.env.PORT || 3000;
@@ -28,7 +28,8 @@ app.get("/api/hello", (req: Request, res: Response) => {
 
 app.get("/api/images", (req: Request, res: Response) => {
     waitDuration(1000).then(() => {
-        res.send(fetchDataFromServer());
+        const images = new ImageProvider(connectMongo()).getAllImages();
+        images.then((images) => res.send(images));
     })
 })
 

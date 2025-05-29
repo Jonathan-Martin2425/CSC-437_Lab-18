@@ -12,7 +12,7 @@ interface IImageDetailsProps {
 
 export function ImageDetails(props: IImageDetailsProps) {
     const {imageId} = useParams();
-    const image = props.imageData.find(image => image.id === imageId);
+    const image = props.imageData.find(image => image._id === imageId);
     if (!image) {
         return <h2>Image not found</h2>;
     }
@@ -20,7 +20,7 @@ export function ImageDetails(props: IImageDetailsProps) {
     return [
         <h2>{image.name}</h2>,
         <p>By {image.author.username}</p>,
-        <ImageNameEditor imageId={image.id} initialValue={image.name} setImageData={props.setImageData} images={props.imageData}/>,
+        <ImageNameEditor imageId={image._id} initialValue={image.name} setImageData={props.setImageData} images={props.imageData}/>,
         <img className="ImageDetails-img" src={image.src} alt={image.name} />,
     ];
 }
