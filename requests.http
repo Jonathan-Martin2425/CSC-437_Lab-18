@@ -1,0 +1,29 @@
+### Get all images
+# This is a comment
+GET http://localhost:3000/api/images
+
+### A second example.  Each request must be delimited by a triple hash
+POST http://localhost:3000/api/test
+Content-Type: application/json # Content-Type header is a must if you're sending JSON
+# Request body separated from headers by newline
+
+{ "a": 1, "b": 2 }
+
+### GET with query
+GET http://localhost:3000/api/images?q=Blue
+
+### PUT edit image name
+
+PUT http://localhost:3000/api/images/6838ca7eba36fdefbfce1bc3?name=merle%20herding%20sheep
+
+### PUT invalid objId errr
+
+PUT http://localhost:3000/api/images/123?name=merle%20herding%20sheep
+
+### PUT valid objId, not found error
+
+PUT http://localhost:3000/api/images/0000007b0000000000000000?name=merle%20herding%20sheep
+
+### PUT name does not exist error
+
+PUT http://localhost:3000/api/images/6838ca7eba36fdefbfce1bc3
