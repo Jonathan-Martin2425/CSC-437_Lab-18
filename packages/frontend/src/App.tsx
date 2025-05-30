@@ -21,7 +21,7 @@ function App() {
             if(res.status >= 400){
                 console.log("has errored")
                 _setFetchHasErrored(true);
-                return null
+                return null;
             }
 
             return res.json();
