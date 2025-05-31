@@ -19,12 +19,10 @@ export function registerImageRoutes(app: Application, imageProvider: ImageProvid
             }else{
                 images = imageProvider.getAllImages();
             }
-            console.log(images);
             images.then((images) => {
-                console.log(images);
                 res.send(images);
             });
-        })
+        }).catch(console.error);
     })
 
     app.put("/api/images/:id", (req: Request, res: Response) => {
