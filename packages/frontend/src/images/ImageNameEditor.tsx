@@ -5,7 +5,7 @@ interface INameEditorProps {
     initialValue: string,
     imageId: string,
     images: IApiImageData[],
-    setImageData: (data: IApiImageData[]) => void,
+    setImageData: (data: IApiImageData) => void,
 }
 
 export function ImageNameEditor(props: INameEditorProps) {
@@ -29,16 +29,20 @@ export function ImageNameEditor(props: INameEditorProps) {
             return res.json();
         }).then((json) => {
             if(json){
-                let imagesCopy = props.images.slice();
-                imagesCopy[Number(props.imageId)].name = input;
-                props.setImageData(imagesCopy)
+                const data = props.images.find((data: IApiImageData) => data._id === props.imageId)
+                if(data){
+                    const dataCopy = Object.assign(data, {name: input});
+                    props.setImageData(dataCopy);
+                }else{
+                    hasErrored = true;
+                }
             }else{
                 hasErrored = true;
             }
             _setFetchHasErrored(hasErrored);
             _setIsFetchingData(false); 
             setIsEditingName(false);
-        })
+        }).catch(() => console.log("image name edit error"))
 
     }
 

@@ -1,11 +1,8 @@
-import { IApiImageData } from "common/ApiImageData";
-import { connectMongo } from "./connectMongo";
-import { Collection, MongoClient, ObjectId } from "mongodb";
-import { connect, disconnect, model, Schema } from "mongoose";
+import { MongoClient, ObjectId } from "mongodb";
 
 interface IImageDocument {
     _id: ObjectId,
-    src: string,
+    src: string,    
     name: string,
     authorId: string,
 }
@@ -19,7 +16,6 @@ export class ImageProvider {
             throw new Error("Missing IMAGES_COLLECTION_NAME from environment variables");
         }
         this.collection = this.mongoClient.db().collection(collectionName)
-
     }
 
     getAllImages(q?: string) {
@@ -48,7 +44,10 @@ export class ImageProvider {
                 }
             },
             {
-                $unwind: '$authorInfo'
+                $unwind: {
+                    path: '$authorInfo',
+                    preserveNullAndEmptyArrays: true
+                }
             },
             {
                 $project: {

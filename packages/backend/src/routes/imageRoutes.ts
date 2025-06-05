@@ -24,7 +24,7 @@ export function registerImageRoutes(app: Application, imageProvider: ImageProvid
             });
         }).catch(console.error);
     })
-
+    //http://localhost:3000/api/images/6838ca7eba36fdefbfce1bc3name=Blue+merle+herding+sheep
     app.put("/api/images/:id", (req: Request, res: Response) => {
         const id = req.params.id;
         const name = req.query.name;

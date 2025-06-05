@@ -5,7 +5,7 @@ import { ImageNameEditor } from "./ImageNameEditor.tsx";
 
 interface IImageDetailsProps {
     imageData: IApiImageData[],
-    setImageData: (data: IApiImageData[]) => void,
+    setImageData: (data: IApiImageData) => void,
     isFetchingData: boolean,
     fetchHasErrored: boolean,
 }

@@ -3,4 +3,6 @@ export const ValidRoutes = {
     LOGIN: "/login",
     UPLOAD: "/upload",
     IMAGES: "/images",
+    IMAGES_ID: "/images/:imageId"
+    
 }
