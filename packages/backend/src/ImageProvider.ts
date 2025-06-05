@@ -70,4 +70,10 @@ export class ImageProvider {
         const res = await this.collection.updateOne({_id: new ObjectId(imageId)}, {$set: {name: newName}})
         return await res.matchedCount;
     }
+
+    async verifyLogin(loginUser: string, imageId: string) {
+        const image = this.collection.findOne({_id: new ObjectId(imageId)});
+        const author = ((await image) as IImageDocument).authorId;
+        return author === loginUser;
+    }
 }

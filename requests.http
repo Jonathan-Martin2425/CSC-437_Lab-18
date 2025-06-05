@@ -27,3 +27,66 @@ PUT http://localhost:3000/api/images/0000007b0000000000000000?name=merle%20herdi
 ### PUT name does not exist error
 
 PUT http://localhost:3000/api/images/6838ca7eba36fdefbfce1bc3
+
+### New user registration
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "username": "newuser", "password": "password" }
+
+### Invalid body registration error
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{ "username": "newuser"}
+
+### Invalid body registration error 2
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+### Verification success
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "newuser", "password": "password" }
+
+### Bad request verification
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "newuser" }
+
+### Bad request verification 2
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{}
+
+### Invalid username
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "not a user that exists", "password": "password"}
+
+### Invalid password
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "newuser", "password": "notpassword"}
+
+### Invalid username and password
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "not a user that exists", "password": "notpassword"}
+
+### Verification success
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{ "username": "fluffycoat", "password": "fluffy123" }
+
+### PUT edit image name
+
+PUT http://localhost:3000/api/images/6838ca7eba36fdefbfce1bc7?name=Two%20Chickens
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZsdWZmeWNvYXQiLCJpYXQiOjE3NDkxNTU2NTYsImV4cCI6MTc0OTI0MjA1Nn0.UBArif7LajYw7-gGpH8dh-LYJWbC5M80OlVNjjgRdM4
