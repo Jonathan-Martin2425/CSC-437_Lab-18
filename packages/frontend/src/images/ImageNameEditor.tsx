@@ -61,7 +61,7 @@ export function ImageNameEditor(props: INameEditorProps) {
         return (
             <div style={{ margin: "1em 0" }}>
                 <button onClick={() => setIsEditingName(true)}>Edit name</button>
-                {fetchHasErrored ? <p>Submit has Failed</p> : null}
+                {fetchHasErrored ? <p>Only Author can change name</p> : null}
             </div>
         );
     }

@@ -32,7 +32,12 @@ export function registerAuthRoutes(app: Application, credProvider: CredentialsPr
             if(username && password){
                 credProvider.registerUser(username, password).then((success) => {
                     if(success){
-                        res.status(201).send()
+                        const token = generateAuthToken(username, app.locals.JWT_SECRET).then((token) => {
+                            res.status(200).send({
+                                username: username,
+                                token: token
+                            });
+                        })
                     }else{
                         res.status(409).send({
                             error: "Bad Request",
