@@ -8,7 +8,7 @@ interface LoginProps {
     updateImageData: () => void,
 }
 
-interface RepsonseMessage{
+export interface RepsonseMessage{
     type: string,
     message: string,
 }

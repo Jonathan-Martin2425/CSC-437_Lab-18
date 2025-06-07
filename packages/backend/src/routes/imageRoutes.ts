@@ -3,6 +3,7 @@ import { ImageProvider } from "./../ImageProvider";
 import { match, ok } from "assert";
 import { ObjectId } from "mongodb";
 import { verifyAuthToken } from "../TokenVerification";
+import { handleImageFileErrors, imageMiddlewareFactory } from "../imageUploadMiddleware";
 
 const MAX_NAME_LENGTH = 100;
 
@@ -78,4 +79,27 @@ export function registerImageRoutes(app: Application, imageProvider: ImageProvid
             });
         }
     })
+
+    app.post("/api/images", imageMiddlewareFactory.single("image"), handleImageFileErrors,
+    async (req: Request, res: Response) => {
+        // Final handler function after the above two middleware functions finish running
+        const file = req.file;
+        const fileName = req.body.name;
+        if(req.user && fileName && file){
+            const author = req.user.username;
+            imageProvider.createImage({
+                _id: new ObjectId(),
+                src: "/uploads/" + file.filename,
+                name: fileName,
+                authorId: author,
+            }).then((response) => {
+                if(response.acknowledged){
+                    res.status(201).send();
+                }else{
+                    res.status(500).send("Image Wasn't Created");
+                }
+            })
+        }
+    }
+    );
 }

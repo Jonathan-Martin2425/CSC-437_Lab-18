@@ -10,9 +10,11 @@ import { CredentialsProvider } from "./CredentialsProvider";
 dotenv.config(); // Read the .env file in the current working directory, and load values into process.env.
 const PORT = process.env.PORT || 3000;
 const STATIC_DIR = process.env.STATIC_DIR || "public";
+const IMAGE_UPLOAD_DIR = process.env.IMAGE_UPLOAD_DIR || "public";
 
 const app = express();
 app.use(express.static(STATIC_DIR));
+app.use("/uploads", express.static(IMAGE_UPLOAD_DIR))
 app.use(express.json());
 
 app.locals.JWT_SECRET = process.env.JWT_SECRET;

@@ -87,8 +87,8 @@ function App() {
         <Routes>
             <Route path={ValidRoutes.HOME} element={<MainLayout /*darkMode={darkModeClass}*//>}>
                 <Route index element={<ProtectedRoute authToken={token}><AllImages imageData={imageData} isFetchingData={isFetchingData} fetchHasErrored={fetchHasErrored} searchPanel={searchForm}/></ProtectedRoute>}/>
-                <Route path={ValidRoutes.IMAGES_ID} element={<ProtectedRoute authToken={token}><ImageDetails imageData={imageData} isFetchingData={isFetchingData} fetchHasErrored={fetchHasErrored} setImageData={putImageData}/></ProtectedRoute>}/>
-                <Route path={ValidRoutes.UPLOAD} element={<ProtectedRoute authToken={token}><UploadPage/></ProtectedRoute>}/>
+                <Route path={ValidRoutes.IMAGES_ID} element={<ProtectedRoute authToken={token}><ImageDetails imageData={imageData} isFetchingData={isFetchingData} fetchHasErrored={fetchHasErrored} setImageData={putImageData} token={token}/></ProtectedRoute>}/>
+                <Route path={ValidRoutes.UPLOAD} element={<ProtectedRoute authToken={token}><UploadPage token={token}/></ProtectedRoute>}/>
                 <Route path={ValidRoutes.LOGIN} element={<LoginPage isRegistering={false} setToken={loginWithToken} updateImageData={updateImageData}/>}/>
                 <Route path={ValidRoutes.REGISTER} element={<LoginPage isRegistering={true} setToken={loginWithToken} updateImageData={updateImageData}/>}/>
             </Route>

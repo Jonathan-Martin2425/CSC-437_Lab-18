@@ -5,6 +5,7 @@ interface INameEditorProps {
     initialValue: string,
     imageId: string,
     images: IApiImageData[],
+    token: string,
     setImageData: (data: IApiImageData) => void,
 }
 
@@ -16,7 +17,13 @@ export function ImageNameEditor(props: INameEditorProps) {
 
     async function handleSubmitPressed() {
         // TODO
-        const response = fetch("/api/images"); 
+        const response = fetch("/api/images",
+            {
+                headers: {
+                    "Authorization": `Bearer ${props.token}`
+                }
+            }
+        ); 
         let hasErrored: boolean = false;
         _setIsFetchingData(true);
         response.then((res) => {

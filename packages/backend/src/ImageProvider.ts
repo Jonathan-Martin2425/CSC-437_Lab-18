@@ -34,7 +34,7 @@ export class ImageProvider {
             });
         }
         
-        pipeline.push(
+        /*pipeline.push(
             {
                 $lookup: {
                     from: authorCollectionName,
@@ -56,11 +56,12 @@ export class ImageProvider {
                     name: 1,
                     author: {
                         id: { $toString: '$authorInfo._id' },
-                        username: '$authorInfo.username'
+                        username: '$authorInfo.username',
+                        email: "placeholder123@gmail.com"
                     }
                 }
             }
-        );
+        );*/
 
         return this.collection.aggregate(pipeline).toArray();
     }
@@ -69,6 +70,10 @@ export class ImageProvider {
         // Do keep in mind the type of _id in the DB is ObjectId
         const res = await this.collection.updateOne({_id: new ObjectId(imageId)}, {$set: {name: newName}})
         return await res.matchedCount;
+    }
+
+    async createImage(data: IImageDocument){
+        return this.collection.insertOne({src: data.src, name: data.name, authorId: data.authorId});
     }
 
     async verifyLogin(loginUser: string, imageId: string) {

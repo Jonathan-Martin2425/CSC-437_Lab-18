@@ -8,6 +8,7 @@ interface IImageDetailsProps {
     setImageData: (data: IApiImageData) => void,
     isFetchingData: boolean,
     fetchHasErrored: boolean,
+    token: string,
 }
 
 export function ImageDetails(props: IImageDetailsProps) {
@@ -19,8 +20,8 @@ export function ImageDetails(props: IImageDetailsProps) {
 
     return [
         <h2>{image.name}</h2>,
-        <p>By {image.author.username}</p>,
-        <ImageNameEditor imageId={image._id} initialValue={image.name} setImageData={props.setImageData} images={props.imageData}/>,
+        <p>By {image.authorId}</p>,
+        <ImageNameEditor imageId={image._id} initialValue={image.name} setImageData={props.setImageData} images={props.imageData} token={props.token}/>,
         <img className="ImageDetails-img" src={image.src} alt={image.name} />,
     ];
 }
